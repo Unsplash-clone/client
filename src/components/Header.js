@@ -1,7 +1,10 @@
 import React from "react";
 
+import useStyles from "../styles/HeaderStyles";
+
 function Header() {
-  return <div>Header</div>;
+  const classes = useStyles();
+  return <div className={classes.root}>Header</div>;
 }
 
 export default Header;
