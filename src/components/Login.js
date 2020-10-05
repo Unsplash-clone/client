@@ -1,4 +1,5 @@
 import React from "react";
+import axios from "axios";
 
 import Paper from "@material-ui/core/Paper";
 // import useStyles from "../styles/LoginStyles";
@@ -62,6 +63,30 @@ function Login() {
     setValue(index);
   };
 
+  const handleLogin = () => {
+    try {
+      const response = await axios.post("/api/", {
+        username,
+        password,
+      });
+      console.log(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleSignup = async () => {
+    try {
+      const response = await axios.post("/api/", {
+        username,
+        password,
+      });
+      console.log(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div className={classes.root}>
       <AppBar position="static" color="default">
@@ -88,7 +113,12 @@ function Login() {
           >
             My Unsplash
           </Typography>
-          <form className={classes.form} noValidate autoComplete="off">
+          <form
+            className={classes.form}
+            noValidate
+            autoComplete="off"
+            onSubmit={handleLogin}
+          >
             <TextField
               id="username"
               label="Username"
@@ -123,7 +153,12 @@ function Login() {
           >
             My Unsplash
           </Typography>
-          <form className={classes.form} noValidate autoComplete="off">
+          <form
+            className={classes.form}
+            noValidate
+            autoComplete="off"
+            onSubmit={handleSignup}
+          >
             <TextField
               id="username"
               label="Username"
