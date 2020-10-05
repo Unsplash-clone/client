@@ -63,7 +63,7 @@ function Login() {
     setValue(index);
   };
 
-  const handleLogin = () => {
+  const handleLogin = async () => {
     try {
       const response = await axios.post("/api/", {
         username,
