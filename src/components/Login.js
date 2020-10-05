@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import axios from "axios";
 
 import Paper from "@material-ui/core/Paper";
@@ -13,6 +13,9 @@ import Tab from "@material-ui/core/Tab";
 import Box from "@material-ui/core/Box";
 
 import useInputState from "../hooks/useInputState";
+import useLocalStorageReducer from "../hooks/useLocalStorageReducer";
+
+import { UserContext, DispatchUserContext } from "../contexts/user.context";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -55,6 +58,9 @@ function Login() {
   const [username, handleUsernameChange, resetUsername] = useInputState("");
   const [password, handlePasswordChange, resetPassword] = useInputState("");
 
+  const user = useContext(UserContext);
+  const dispatchUser = useContext(DispatchUserContext);
+
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -63,21 +69,24 @@ function Login() {
     setValue(index);
   };
 
-  const handleLogin = async () => {
+  const handleLogin = async (e) => {
+    e.preventDefault();
     try {
-      const response = await axios.post("/api/", {
+      const response = await axios.post("/api/login", {
         username,
         password,
       });
+      dispatchUser({ type: "login", token: response.data.token });
       console.log(response.data);
     } catch (error) {
       console.log(error);
     }
   };
 
-  const handleSignup = async () => {
+  const handleSignup = async (e) => {
+    e.preventDefault();
     try {
-      const response = await axios.post("/api/", {
+      const response = await axios.post("/api/signup", {
         username,
         password,
       });
@@ -136,6 +145,7 @@ function Login() {
               variant="contained"
               color="primary"
               className={classes.button}
+              type="submit"
             >
               Login
             </Button>
@@ -176,6 +186,7 @@ function Login() {
               variant="contained"
               color="primary"
               className={classes.button}
+              type="submit"
             >
               Signup
             </Button>
