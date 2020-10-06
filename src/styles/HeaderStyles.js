@@ -13,6 +13,10 @@ export default makeStyles((theme) => ({
     display: "inline-block",
     font: `normal bold 24px/1 "Open Sans", sans-serif;`,
     textAlign: "center",
+    "&:hover": {
+      cursor: "pointer",
+      backgroundColor: "#36a262",
+    },
   },
   headerLeft: {
     display: "flex",
