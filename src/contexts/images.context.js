@@ -5,7 +5,7 @@ export const ImagesContext = createContext();
 export const DispatchImagesContext = createContext();
 
 export function ImagesProvider(props) {
-  const [images, dispatch] = useReducer([], imagesReducer);
+  const [images, dispatch] = useReducer(imagesReducer, []);
 
   return (
     <ImagesContext.Provider value={images}>
