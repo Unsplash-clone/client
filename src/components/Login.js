@@ -1,5 +1,6 @@
 import React, { useContext, useState } from "react";
 import axios from "axios";
+import { Redirect } from "react-router-dom";
 
 import Paper from "@material-ui/core/Paper";
 import useStyles from "../styles/LoginStyles";
@@ -51,6 +52,7 @@ function Login() {
   const [password, handlePasswordChange, resetPassword] = useInputState("");
   const [loginErrorMessage, setLoginErrorMessage] = useState(null);
   const [signupErrorMessage, setSignupErrorMessage] = useState(null);
+  const [redirect, setRedirect] = useState(false);
 
   const dispatchToken = useContext(DispatchTokenContext);
 
@@ -78,6 +80,7 @@ function Login() {
         }
       );
       dispatchToken({ type: "login", token: response.data.token });
+      setRedirect(true);
       console.log(response.data);
     } catch (error) {
       console.log(error);
@@ -109,6 +112,7 @@ function Login() {
 
   return (
     <div className={classes.root}>
+      {redirect && <Redirect to="/" />}
       <TabPanel
         value={value}
         index={0}
