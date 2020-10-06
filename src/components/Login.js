@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import axios from "axios";
 
 import Paper from "@material-ui/core/Paper";
-// import useStyles from "../styles/LoginStyles";
+import useStyles from "../styles/LoginStyles";
 import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
@@ -43,13 +43,6 @@ function a11yProps(index) {
     "aria-controls": `full-width-tabpanel-${index}`,
   };
 }
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    backgroundColor: theme.palette.background.paper,
-    width: 500,
-  },
-}));
 
 function Login() {
   const classes = useStyles();
@@ -114,21 +107,26 @@ function Login() {
 
   return (
     <div className={classes.root}>
-      <AppBar position="static" color="default">
-        <Tabs
-          value={value}
-          onChange={handleChange}
-          indicatorColor="primary"
-          textColor="primary"
-          variant="fullWidth"
-          aria-label="full width tabs example"
-        >
-          <Tab label="Login" {...a11yProps(0)} />
-          <Tab label="Signup" {...a11yProps(1)} />
-        </Tabs>
-      </AppBar>
-      <TabPanel value={value} index={0} dir={theme.direction}>
+      <TabPanel
+        value={value}
+        index={0}
+        dir={theme.direction}
+        className={classes.tabpanel}
+      >
         <Paper className={classes.paper}>
+          <AppBar position="static" color="default">
+            <Tabs
+              value={value}
+              onChange={handleChange}
+              indicatorColor="primary"
+              textColor="primary"
+              variant="fullWidth"
+              aria-label="full width tabs example"
+            >
+              <Tab label="Login" {...a11yProps(0)} />
+              <Tab label="Signup" {...a11yProps(1)} />
+            </Tabs>
+          </AppBar>
           <Typography
             variant="h4"
             component="h4"
@@ -168,8 +166,26 @@ function Login() {
           </form>
         </Paper>
       </TabPanel>
-      <TabPanel value={value} index={1} dir={theme.direction}>
+      <TabPanel
+        value={value}
+        index={1}
+        dir={theme.direction}
+        className={classes.tabpanel}
+      >
         <Paper className={classes.paper}>
+          <AppBar position="static" color="default">
+            <Tabs
+              value={value}
+              onChange={handleChange}
+              indicatorColor="primary"
+              textColor="primary"
+              variant="fullWidth"
+              aria-label="full width tabs example"
+            >
+              <Tab label="Login" {...a11yProps(0)} />
+              <Tab label="Signup" {...a11yProps(1)} />
+            </Tabs>
+          </AppBar>
           <Typography
             variant="h4"
             component="h4"
