@@ -15,7 +15,7 @@ import Box from "@material-ui/core/Box";
 import useInputState from "../hooks/useInputState";
 import useLocalStorageReducer from "../hooks/useLocalStorageReducer";
 
-import { UserContext, DispatchUserContext } from "../contexts/user.context";
+import { TokenContext, DispatchTokenContext } from "../contexts/token.context";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -58,8 +58,8 @@ function Login() {
   const [username, handleUsernameChange, resetUsername] = useInputState("");
   const [password, handlePasswordChange, resetPassword] = useInputState("");
 
-  const user = useContext(UserContext);
-  const dispatchUser = useContext(DispatchUserContext);
+  // const user = useContext(UserContext);
+  const dispatchToken = useContext(DispatchTokenContext);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -76,7 +76,7 @@ function Login() {
         username,
         password,
       });
-      dispatchUser({ type: "login", token: response.data.token });
+      dispatchToken({ type: "login", token: response.data.token });
       console.log(response.data);
     } catch (error) {
       console.log(error);
