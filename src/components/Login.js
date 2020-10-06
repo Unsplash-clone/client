@@ -72,10 +72,18 @@ function Login() {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("/api/login", {
-        username,
-        password,
-      });
+      const response = await axios.post(
+        "/api/login",
+        {
+          username,
+          password,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
       dispatchToken({ type: "login", token: response.data.token });
       console.log(response.data);
     } catch (error) {
@@ -86,10 +94,18 @@ function Login() {
   const handleSignup = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("/api/signup", {
-        username,
-        password,
-      });
+      const response = await axios.post(
+        "/api/signup",
+        {
+          username,
+          password,
+        },
+        {
+          header: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
       console.log(response.data);
     } catch (error) {
       console.log(error);

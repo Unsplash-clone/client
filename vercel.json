@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/api/:match*",
+      "destination": "https://my-unsplash-api2.herokuapp.com/:match*"
+    }
+  ]
+}
