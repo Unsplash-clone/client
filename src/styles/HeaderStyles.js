@@ -5,8 +5,22 @@ export default makeStyles((theme) => ({
     display: "flex",
     justifyContent: "space-between",
   },
-  btn: {
+  btnPhoto: {
     backgroundColor: "#3db46d",
+    borderRadius: "32px",
+    padding: "1rem 25px",
+    color: "white",
+    display: "inline-block",
+    font: `normal bold 24px/1 "Open Sans", sans-serif;`,
+    textAlign: "center",
+    marginRight: "1rem",
+    "&:hover": {
+      cursor: "pointer",
+      backgroundColor: "#36a262",
+    },
+  },
+  btnLogout: {
+    backgroundColor: "#b45e91",
     borderRadius: "32px",
     padding: "1rem 25px",
     color: "white",
@@ -15,7 +29,7 @@ export default makeStyles((theme) => ({
     textAlign: "center",
     "&:hover": {
       cursor: "pointer",
-      backgroundColor: "#36a262",
+      backgroundColor: "#6c3857",
     },
   },
   headerLeft: {

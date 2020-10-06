@@ -13,13 +13,14 @@ import Button from "@material-ui/core/Button";
 
 import logo from "../icons/my_unsplash_logo.svg";
 import useStyles from "../styles/HeaderStyles";
-import { TokenContext } from "../contexts/token.context";
+import { TokenContext, DispatchTokenContext } from "../contexts/token.context";
 
 import useInputState from "../hooks/useInputState";
 
 function Header() {
   const classes = useStyles();
   const token = useContext(TokenContext);
+  const dispatchToken = useContext(DispatchTokenContext);
   const [open, setOpen] = useState(false);
   const [label, handleLabelChange, resetLabel] = useInputState();
   const [imageUrl, handleImageUrlChange, resetImageUrl] = useInputState("");
@@ -49,6 +50,10 @@ function Header() {
     console.log(response);
   };
 
+  const handleLogout = () => {
+    dispatchToken({ type: "logout" });
+  };
+
   return (
     <header className={classes.root}>
       <div className={classes.headerLeft}>
@@ -65,8 +70,11 @@ function Header() {
         </div>
       </div>
       <div>
-        <div className={classes.btn} onClick={handleUploadOpen}>
+        <div className={classes.btnPhoto} onClick={handleUploadOpen}>
           Add a photo
+        </div>
+        <div className={classes.btnLogout} onClick={handleLogout}>
+          Logout
         </div>
       </div>
       <Dialog
