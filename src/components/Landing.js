@@ -74,7 +74,15 @@ function Landing() {
   }, []);
 
   const renderImages = () => {
-    const filteredImages = images.filter((image) => image.label.includes(term));
+    const filteredImages = images.filter((image) => {
+      if (term === "" && !image.label) {
+        return true;
+      }
+      if (!image.label) {
+        return false;
+      }
+      return image.label.includes(term);
+    });
     console.log(filteredImages);
     return filteredImages.map((image) => (
       <div className={classes.imageContainer}>
