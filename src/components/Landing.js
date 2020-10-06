@@ -20,15 +20,15 @@ function Landing() {
   const token = useContext(TokenContext);
   const [images, setImages] = useState([]);
   useEffect(() => {
-    const getImages = async () => {
+    const getProfile = async () => {
       const response = await axios.get("/api/user/profile", {
         headers: {
           Authorization: "Bearer " + token,
         },
       });
-      console.log(response);
+      console.log(response.data);
     };
-    getImages();
+    getProfile();
   }, []);
   return (
     <ResponsiveMasonry columnsCountBreakPoints={{ 350: 1, 750: 2, 900: 3 }}>
