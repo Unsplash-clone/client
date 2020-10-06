@@ -2,47 +2,125 @@ import React, { useContext, useState, useEffect } from "react";
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
 import axios from "axios";
 
-import "./Landing.css";
+import DeleteIcon from "@material-ui/icons/Delete";
+import Button from "@material-ui/core/Button";
+import TextField from "@material-ui/core/TextField";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
 
-import image1 from "../stock-images/fluffy.jpg";
-import image2 from "../stock-images/golden-retriever.jpg";
-import image3 from "../stock-images/HB4AT3D3IMI6TMPTWIZ74WAR54.jpg";
-import image4 from "../stock-images/iphone6.png";
-import image5 from "../stock-images/iphone6.png";
-import image6 from "../stock-images/lady-img.jpg";
-import image7 from "../stock-images/bella.jpg";
-import image8 from "../stock-images/mashable.png";
-import image9 from "../stock-images/pug.jpg";
-import image10 from "../stock-images/tnw.png";
+import makeStyles from "../styles/LandingStyles";
+
+import {
+  ImagesContext,
+  DispatchImagesContext,
+} from "../contexts/images.context";
 import { TokenContext } from "../contexts/token.context";
 
+import useInputState from "../hooks/useInputState";
+
 function Landing() {
+  const classes = makeStyles();
   const token = useContext(TokenContext);
-  const [images, setImages] = useState([]);
+  const images = useContext(ImagesContext);
+  const dispatchImages = useContext(DispatchImagesContext);
+  const [deleteImage, setDeleteImage] = useState({});
+  const [password, setPassword, resetPassword] = useInputState("");
+
+  const [open, setOpen] = React.useState(false);
+
+  const handleDeleteIcon = async (image) => {
+    setDeleteImage(image);
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleDelete = async () => {
+    try {
+      const response = await axios.post(
+        "/api/user/deletepost",
+        {
+          password: password,
+          uuid: deleteImage.uuid,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + token,
+          },
+        }
+      );
+    } catch (error) {}
+    setOpen(false);
+  };
   useEffect(() => {
-    const getProfile = async () => {
-      const response = await axios.get("/api/user/profile", {
+    const getImages = async () => {
+      const response = await axios.get("/api/user/images", {
         headers: {
           Authorization: "Bearer " + token,
         },
       });
-      console.log(response.data);
+      dispatchImages({ type: "update", data: response.data.images });
     };
-    getProfile();
+    getImages();
   }, []);
+
+  const renderImages = () => {
+    return images.map((image) => (
+      <div className={classes.imageContainer}>
+        <div
+          className={classes.deleteContainer}
+          onClick={() => handleDeleteIcon(image)}
+        >
+          <DeleteIcon className={classes.DeleteIcon} />
+        </div>
+        <img className={classes.image} src={image.url} />
+      </div>
+    ));
+  };
+  console.log(images);
   return (
-    <ResponsiveMasonry columnsCountBreakPoints={{ 350: 1, 750: 2, 900: 3 }}>
-      <Masonry>
-        <img src={image1} />
-        <img src={image2} />
-        <img src={image3} />
-        <img src={image8} />
-        <img src={image5} />
-        <img src={image7} />
-        <img src={image9} />
-        <img src={image10} />
-      </Masonry>
-    </ResponsiveMasonry>
+    <>
+      <ResponsiveMasonry columnsCountBreakPoints={{ 350: 1, 750: 2, 900: 3 }}>
+        <Masonry className={classes.masonry}>{renderImages()}</Masonry>
+      </ResponsiveMasonry>
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="form-dialog-title"
+      >
+        <DialogTitle id="form-dialog-title">{deleteImage.label}</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Please enter your password to confirm that you want to delete this
+            image
+          </DialogContentText>
+          <TextField
+            autoFocus
+            margin="dense"
+            id="password"
+            label="Password"
+            type="password"
+            fullWidth
+            value={password}
+            onChange={setPassword}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} color="default">
+            Cancel
+          </Button>
+          <Button onClick={handleDelete} color="secondary">
+            Delete
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </>
   );
 }
 
