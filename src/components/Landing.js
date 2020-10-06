@@ -18,6 +18,7 @@ import {
   DispatchImagesContext,
 } from "../contexts/images.context";
 import { TokenContext } from "../contexts/token.context";
+import { SearchContext } from "../contexts/search.context";
 
 import useInputState from "../hooks/useInputState";
 
@@ -26,6 +27,7 @@ function Landing() {
   const token = useContext(TokenContext);
   const images = useContext(ImagesContext);
   const dispatchImages = useContext(DispatchImagesContext);
+  const term = useContext(SearchContext);
   const [deleteImage, setDeleteImage] = useState({});
   const [password, setPassword, resetPassword] = useInputState("");
 
@@ -72,17 +74,19 @@ function Landing() {
   }, []);
 
   const renderImages = () => {
-    return images.map((image) => (
-      <div className={classes.imageContainer}>
-        <div
-          className={classes.deleteContainer}
-          onClick={() => handleDeleteIcon(image)}
-        >
-          <DeleteIcon className={classes.DeleteIcon} />
+    return images.map((image) =>
+      image.label.includes(term) ? (
+        <div className={classes.imageContainer}>
+          <div
+            className={classes.deleteContainer}
+            onClick={() => handleDeleteIcon(image)}
+          >
+            <DeleteIcon className={classes.DeleteIcon} />
+          </div>
+          <img className={classes.image} src={image.url} />
         </div>
-        <img className={classes.image} src={image.url} />
-      </div>
-    ));
+      ) : null
+    );
   };
   console.log(images);
   return (
