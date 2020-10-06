@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import axios from "axios";
 
 import InputBase from "@material-ui/core/InputBase";
 import SearchIcon from "@material-ui/icons/Search";
@@ -12,10 +13,16 @@ import Button from "@material-ui/core/Button";
 
 import logo from "../icons/my_unsplash_logo.svg";
 import useStyles from "../styles/HeaderStyles";
+import { TokenContext } from "../contexts/token.context";
+
+import useInputState from "../hooks/useInputState";
 
 function Header() {
   const classes = useStyles();
+  const token = useContext(TokenContext);
   const [open, setOpen] = useState(false);
+  const [label, handleLabelChange, resetLabel] = useInputState();
+  const [imageUrl, handleImageUrlChange, resetImageUrl] = useInputState("");
 
   const handleUploadOpen = () => {
     setOpen(true);
@@ -25,8 +32,20 @@ function Header() {
     setOpen(false);
   };
 
-  const handleSubmit = () => {
-    console.log("submitted");
+  const handleSubmit = async () => {
+    const response = await axios.post(
+      "/api/user/post",
+      {
+        url: imageUrl,
+        label,
+      },
+      {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      }
+    );
+    console.log(response);
   };
 
   return (
@@ -63,12 +82,16 @@ function Header() {
             id="label"
             label="Label"
             fullWidth
+            value={label}
+            onChange={handleLabelChange}
           />
           <TextField
             autoFocus
             margin="dense"
             id="imageUrl"
             label="Image URL"
+            value={imageUrl}
+            onChange={handleImageUrlChange}
             fullWidth
           />
         </DialogContent>
