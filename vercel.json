@@ -2,7 +2,7 @@
   "rewrites": [
     {
       "source": "/api/:match*",
-      "destination": "https://my-unsplash-api2.herokuapp.com/api/:match*"
+      "destination": "https://mysterious-springs-82096.herokuapp.com/api/:match*"
     }
   ]
 }

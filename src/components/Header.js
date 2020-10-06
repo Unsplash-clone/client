@@ -47,6 +47,7 @@ function Header() {
         },
       }
     );
+    setOpen(false);
     console.log(response);
   };
 
