@@ -55,6 +55,7 @@ function Landing() {
           },
         }
       );
+      dispatchImages({ type: "update", data: response.data.images });
     } catch (error) {}
     setOpen(false);
   };

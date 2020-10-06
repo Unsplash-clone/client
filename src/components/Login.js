@@ -1,8 +1,9 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import axios from "axios";
+import { Redirect } from "react-router-dom";
 
 import Paper from "@material-ui/core/Paper";
-// import useStyles from "../styles/LoginStyles";
+import useStyles from "../styles/LoginStyles";
 import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
@@ -13,7 +14,6 @@ import Tab from "@material-ui/core/Tab";
 import Box from "@material-ui/core/Box";
 
 import useInputState from "../hooks/useInputState";
-import useLocalStorageReducer from "../hooks/useLocalStorageReducer";
 
 import { TokenContext, DispatchTokenContext } from "../contexts/token.context";
 
@@ -44,21 +44,16 @@ function a11yProps(index) {
   };
 }
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    backgroundColor: theme.palette.background.paper,
-    width: 500,
-  },
-}));
-
 function Login() {
   const classes = useStyles();
   const theme = useTheme();
   const [value, setValue] = React.useState(0);
   const [username, handleUsernameChange, resetUsername] = useInputState("");
   const [password, handlePasswordChange, resetPassword] = useInputState("");
+  const [loginErrorMessage, setLoginErrorMessage] = useState(null);
+  const [signupErrorMessage, setSignupErrorMessage] = useState(null);
+  const [redirect, setRedirect] = useState(false);
 
-  // const user = useContext(UserContext);
   const dispatchToken = useContext(DispatchTokenContext);
 
   const handleChange = (event, newValue) => {
@@ -85,9 +80,11 @@ function Login() {
         }
       );
       dispatchToken({ type: "login", token: response.data.token });
+      setRedirect(true);
       console.log(response.data);
     } catch (error) {
       console.log(error);
+      setLoginErrorMessage("login error");
     }
   };
 
@@ -109,26 +106,33 @@ function Login() {
       console.log(response.data);
     } catch (error) {
       console.log(error);
+      setSignupErrorMessage("Signup error");
     }
   };
 
   return (
     <div className={classes.root}>
-      <AppBar position="static" color="default">
-        <Tabs
-          value={value}
-          onChange={handleChange}
-          indicatorColor="primary"
-          textColor="primary"
-          variant="fullWidth"
-          aria-label="full width tabs example"
-        >
-          <Tab label="Login" {...a11yProps(0)} />
-          <Tab label="Signup" {...a11yProps(1)} />
-        </Tabs>
-      </AppBar>
-      <TabPanel value={value} index={0} dir={theme.direction}>
+      {redirect && <Redirect to="/" />}
+      <TabPanel
+        value={value}
+        index={0}
+        dir={theme.direction}
+        className={classes.tabpanel}
+      >
         <Paper className={classes.paper}>
+          <AppBar position="static" color="default">
+            <Tabs
+              value={value}
+              onChange={handleChange}
+              indicatorColor="primary"
+              textColor="primary"
+              variant="fullWidth"
+              aria-label="full width tabs example"
+            >
+              <Tab label="Login" {...a11yProps(0)} />
+              <Tab label="Signup" {...a11yProps(1)} />
+            </Tabs>
+          </AppBar>
           <Typography
             variant="h4"
             component="h4"
@@ -157,6 +161,10 @@ function Login() {
               value={password}
               onChange={handlePasswordChange}
             />
+
+            <Typography variant="body2" gutterBottom color="error">
+              {loginErrorMessage}
+            </Typography>
             <Button
               variant="contained"
               color="primary"
@@ -168,8 +176,26 @@ function Login() {
           </form>
         </Paper>
       </TabPanel>
-      <TabPanel value={value} index={1} dir={theme.direction}>
+      <TabPanel
+        value={value}
+        index={1}
+        dir={theme.direction}
+        className={classes.tabpanel}
+      >
         <Paper className={classes.paper}>
+          <AppBar position="static" color="default">
+            <Tabs
+              value={value}
+              onChange={handleChange}
+              indicatorColor="primary"
+              textColor="primary"
+              variant="fullWidth"
+              aria-label="full width tabs example"
+            >
+              <Tab label="Login" {...a11yProps(0)} />
+              <Tab label="Signup" {...a11yProps(1)} />
+            </Tabs>
+          </AppBar>
           <Typography
             variant="h4"
             component="h4"
@@ -198,6 +224,9 @@ function Login() {
               value={password}
               onChange={handlePasswordChange}
             />
+            <Typography variant="body2" gutterBottom color="error">
+              {signupErrorMessage}
+            </Typography>
             <Button
               variant="contained"
               color="primary"

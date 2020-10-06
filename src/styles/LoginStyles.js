@@ -7,9 +7,16 @@ export default makeStyles((theme) => ({
     justifyContent: "center",
   },
   paper: {
+    width: "100%",
+    padding: 0,
+    margin: 0,
+    "& input": {
+      width: "50%",
+    },
+  },
+  tabpanel: {
     margin: theme.spacing(1),
     width: "40%",
-    padding: theme.spacing(2),
     [theme.breakpoints.down("md")]: {
       width: "50%",
     },
@@ -32,5 +39,6 @@ export default makeStyles((theme) => ({
   },
   button: {
     width: "80px",
+    margin: "20px",
   },
 }));
