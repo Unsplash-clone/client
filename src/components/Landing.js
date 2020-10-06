@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useContext, useState, useEffect } from "react";
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
+import axios from "axios";
 
 import "./Landing.css";
 
@@ -13,8 +14,22 @@ import image7 from "../stock-images/bella.jpg";
 import image8 from "../stock-images/mashable.png";
 import image9 from "../stock-images/pug.jpg";
 import image10 from "../stock-images/tnw.png";
+import { TokenContext } from "../contexts/token.context";
 
 function Landing() {
+  const token = useContext(TokenContext);
+  const [images, setImages] = useState([]);
+  useEffect(() => {
+    const getProfile = async () => {
+      const response = await axios.get("/api/user/profile", {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      });
+      console.log(response.data);
+    };
+    getProfile();
+  }, []);
   return (
     <ResponsiveMasonry columnsCountBreakPoints={{ 350: 1, 750: 2, 900: 3 }}>
       <Masonry>
