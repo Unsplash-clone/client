@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import axios from "axios";
 
 import Paper from "@material-ui/core/Paper";
@@ -13,7 +13,6 @@ import Tab from "@material-ui/core/Tab";
 import Box from "@material-ui/core/Box";
 
 import useInputState from "../hooks/useInputState";
-import useLocalStorageReducer from "../hooks/useLocalStorageReducer";
 
 import { TokenContext, DispatchTokenContext } from "../contexts/token.context";
 
@@ -50,8 +49,9 @@ function Login() {
   const [value, setValue] = React.useState(0);
   const [username, handleUsernameChange, resetUsername] = useInputState("");
   const [password, handlePasswordChange, resetPassword] = useInputState("");
+  const [loginErrorMessage, setLoginErrorMessage] = useState(null);
+  const [signupErrorMessage, setSignupErrorMessage] = useState(null);
 
-  // const user = useContext(UserContext);
   const dispatchToken = useContext(DispatchTokenContext);
 
   const handleChange = (event, newValue) => {
@@ -81,6 +81,7 @@ function Login() {
       console.log(response.data);
     } catch (error) {
       console.log(error);
+      setLoginErrorMessage("login error");
     }
   };
 
@@ -102,6 +103,7 @@ function Login() {
       console.log(response.data);
     } catch (error) {
       console.log(error);
+      setSignupErrorMessage("Signup error");
     }
   };
 
@@ -155,6 +157,10 @@ function Login() {
               value={password}
               onChange={handlePasswordChange}
             />
+
+            <Typography variant="body2" gutterBottom color="error">
+              {loginErrorMessage}
+            </Typography>
             <Button
               variant="contained"
               color="primary"
@@ -214,6 +220,9 @@ function Login() {
               value={password}
               onChange={handlePasswordChange}
             />
+            <Typography variant="body2" gutterBottom color="error">
+              {signupErrorMessage}
+            </Typography>
             <Button
               variant="contained"
               color="primary"
