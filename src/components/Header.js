@@ -18,6 +18,7 @@ import {
   SearchContext,
   DispatchSearchContext,
 } from "../contexts/search.context";
+import { DispatchImagesContext } from "../contexts/images.context";
 
 import useInputState from "../hooks/useInputState";
 
@@ -27,6 +28,7 @@ function Header() {
   const dispatchToken = useContext(DispatchTokenContext);
   const term = useContext(SearchContext);
   const dispatchTerm = useContext(DispatchSearchContext);
+  const dispatchImages = useContext(DispatchImagesContext);
   const [open, setOpen] = useState(false);
   const [label, handleLabelChange, resetLabel] = useInputState();
   const [imageUrl, handleImageUrlChange, resetImageUrl] = useInputState("");
@@ -54,7 +56,7 @@ function Header() {
       }
     );
     setOpen(false);
-    console.log(response);
+    dispatchImages({ type: "update", data: response.data.images });
   };
 
   const handleLogout = () => {
