@@ -2,7 +2,10 @@ import React, { useContext, useState, useEffect } from "react";
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
 import axios from "axios";
 
-import "./Landing.css";
+import DeleteIcon from "@material-ui/icons/Delete";
+
+// import "./Landing.css";
+import makeStyles from "../styles/LandingStyles";
 
 import {
   ImagesContext,
@@ -11,6 +14,7 @@ import {
 import { TokenContext } from "../contexts/token.context";
 
 function Landing() {
+  const classes = makeStyles();
   const token = useContext(TokenContext);
   const images = useContext(ImagesContext);
   const dispatchImages = useContext(DispatchImagesContext);
@@ -28,12 +32,17 @@ function Landing() {
   }, []);
 
   const renderImages = () => {
-    return images.map((image) => <img src={image.url} />);
+    return images.map((image) => (
+      <div className={classes.imageContainer}>
+        <DeleteIcon className={classes.DeleteIcon} />
+        <img className={classes.image} src={image.url} />
+      </div>
+    ));
   };
   console.log(images);
   return (
     <ResponsiveMasonry columnsCountBreakPoints={{ 350: 1, 750: 2, 900: 3 }}>
-      <Masonry>{renderImages()}</Masonry>
+      <Masonry className={classes.masonry}>{renderImages()}</Masonry>
     </ResponsiveMasonry>
   );
 }
