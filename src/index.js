@@ -5,13 +5,16 @@ import App from "./components/App";
 
 import { TokenProvider } from "./contexts/token.context";
 import { ImagesProvider } from "./contexts/images.context";
+import { SearchProvider } from "./contexts/search.context";
 
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
       <TokenProvider>
         <ImagesProvider>
-          <App />
+          <SearchProvider>
+            <App />
+          </SearchProvider>
         </ImagesProvider>
       </TokenProvider>
     </BrowserRouter>

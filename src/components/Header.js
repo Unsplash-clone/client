@@ -14,6 +14,10 @@ import Button from "@material-ui/core/Button";
 import logo from "../icons/my_unsplash_logo.svg";
 import useStyles from "../styles/HeaderStyles";
 import { TokenContext, DispatchTokenContext } from "../contexts/token.context";
+import {
+  SearchContext,
+  DispatchSearchContext,
+} from "../contexts/search.context";
 
 import useInputState from "../hooks/useInputState";
 
@@ -21,6 +25,8 @@ function Header() {
   const classes = useStyles();
   const token = useContext(TokenContext);
   const dispatchToken = useContext(DispatchTokenContext);
+  const term = useContext(SearchContext);
+  const dispatchTerm = useContext(DispatchSearchContext);
   const [open, setOpen] = useState(false);
   const [label, handleLabelChange, resetLabel] = useInputState();
   const [imageUrl, handleImageUrlChange, resetImageUrl] = useInputState("");
@@ -55,6 +61,10 @@ function Header() {
     dispatchToken({ type: "logout" });
   };
 
+  const handleSearchChange = (e) => {
+    dispatchTerm({ type: "update", term: e.target.value });
+  };
+
   return (
     <header className={classes.root}>
       <div className={classes.headerLeft}>
@@ -65,8 +75,10 @@ function Header() {
           <SearchIcon className={classes.searchIcon} />
           <InputBase
             className={classes.input}
-            placeholder="Search by name"
+            placeholder="Search by label"
             inputProps={{ "aria-label": "search google maps" }}
+            value={term}
+            onChange={handleSearchChange}
           />
         </div>
       </div>
