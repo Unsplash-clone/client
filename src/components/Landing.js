@@ -74,19 +74,19 @@ function Landing() {
   }, []);
 
   const renderImages = () => {
-    return images.map((image) =>
-      image.label.includes(term) ? (
-        <div className={classes.imageContainer}>
-          <div
-            className={classes.deleteContainer}
-            onClick={() => handleDeleteIcon(image)}
-          >
-            <DeleteIcon className={classes.DeleteIcon} />
-          </div>
-          <img className={classes.image} src={image.url} />
+    const filteredImages = images.filter((image) => image.label.includes(term));
+    console.log(filteredImages);
+    return filteredImages.map((image) => (
+      <div className={classes.imageContainer}>
+        <div
+          className={classes.deleteContainer}
+          onClick={() => handleDeleteIcon(image)}
+        >
+          <DeleteIcon className={classes.DeleteIcon} />
         </div>
-      ) : null
-    );
+        <img className={classes.image} src={image.url} />
+      </div>
+    ));
   };
   console.log(images);
   return (
