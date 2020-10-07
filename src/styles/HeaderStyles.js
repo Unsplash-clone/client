@@ -1,4 +1,4 @@
-import { makeStyles } from "@material-ui/styles";
+import { makeStyles } from "@material-ui/core/styles";
 
 export default makeStyles((theme) => ({
   root: {
@@ -18,6 +18,10 @@ export default makeStyles((theme) => ({
       cursor: "pointer",
       backgroundColor: "#36a262",
     },
+    [theme.breakpoints.down("sm")]: {
+      fontSize: "12px",
+    },
+    marginBottom: theme.spacing(1),
   },
   btnLogout: {
     backgroundColor: "#b45e91",
@@ -31,10 +35,16 @@ export default makeStyles((theme) => ({
       cursor: "pointer",
       backgroundColor: "#6c3857",
     },
+    [theme.breakpoints.down("sm")]: {
+      fontSize: "12px",
+    },
   },
   headerLeft: {
     display: "flex",
     alignItems: "center",
+    [theme.breakpoints.down("sm")]: {
+      flexDirection: "column",
+    },
   },
   searchBar: {
     border: ".15rem solid #BDBDBD",
@@ -47,5 +57,11 @@ export default makeStyles((theme) => ({
   searchIcon: {
     margin: "10px",
     color: "#BDBDBD",
+  },
+  btnContainer: {
+    [theme.breakpoints.down("sm")]: {
+      display: "flex",
+      flexDirection: "column",
+    },
   },
 }));
