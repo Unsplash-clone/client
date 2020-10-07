@@ -155,6 +155,7 @@ function Login() {
               label="Username"
               value={username}
               onChange={handleUsernameChange}
+              className={classes.input}
             />
             <TextField
               id="password"
@@ -162,6 +163,7 @@ function Login() {
               type="password"
               value={password}
               onChange={handlePasswordChange}
+              className={classes.input}
             />
 
             <Typography variant="body2" gutterBottom color="error">
@@ -221,6 +223,7 @@ function Login() {
               label="Username"
               value={username}
               onChange={handleUsernameChange}
+              className={classes.input}
             />
             <TextField
               id="password"
@@ -228,6 +231,7 @@ function Login() {
               type="password"
               value={password}
               onChange={handlePasswordChange}
+              className={classes.input}
             />
             <Typography variant="body2" gutterBottom color="error">
               {signupErrorMessage}

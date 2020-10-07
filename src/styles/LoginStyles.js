@@ -27,8 +27,8 @@ export default makeStyles((theme) => ({
       width: "90%",
     },
   },
-  subHeading: {
-    marginBottom: theme.spacing(10),
+  heading: {
+    marginTop: theme.spacing(3),
   },
   form: {
     display: "flex",
@@ -40,5 +40,8 @@ export default makeStyles((theme) => ({
   button: {
     width: "80px",
     margin: "20px",
+  },
+  input: {
+    margin: theme.spacing(2),
   },
 }));
