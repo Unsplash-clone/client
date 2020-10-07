@@ -10,6 +10,7 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
+import Chip from "@material-ui/core/Chip";
 
 import makeStyles from "../styles/LandingStyles";
 
@@ -18,6 +19,7 @@ import {
   DispatchImagesContext,
 } from "../contexts/images.context";
 import { TokenContext } from "../contexts/token.context";
+import { SearchContext } from "../contexts/search.context";
 
 import useInputState from "../hooks/useInputState";
 
@@ -26,6 +28,7 @@ function Landing() {
   const token = useContext(TokenContext);
   const images = useContext(ImagesContext);
   const dispatchImages = useContext(DispatchImagesContext);
+  const term = useContext(SearchContext);
   const [deleteImage, setDeleteImage] = useState({});
   const [password, setPassword, resetPassword] = useInputState("");
 
@@ -56,6 +59,7 @@ function Landing() {
         }
       );
       dispatchImages({ type: "update", data: response.data.images });
+      resetPassword();
     } catch (error) {}
     setOpen(false);
   };
@@ -72,7 +76,17 @@ function Landing() {
   }, []);
 
   const renderImages = () => {
-    return images.map((image) => (
+    const filteredImages = images.filter((image) => {
+      if (term === "" && !image.label) {
+        return true;
+      }
+      if (!image.label) {
+        return false;
+      }
+      return image.label.includes(term);
+    });
+    console.log(filteredImages);
+    return filteredImages.map((image) => (
       <div className={classes.imageContainer}>
         <div
           className={classes.deleteContainer}
@@ -80,6 +94,7 @@ function Landing() {
         >
           <DeleteIcon className={classes.DeleteIcon} />
         </div>
+        {image.label && <Chip label={image.label} className="chip" />}
         <img className={classes.image} src={image.url} />
       </div>
     ));

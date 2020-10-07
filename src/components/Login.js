@@ -53,7 +53,7 @@ function Login() {
   const [loginErrorMessage, setLoginErrorMessage] = useState(null);
   const [signupErrorMessage, setSignupErrorMessage] = useState(null);
   const [redirect, setRedirect] = useState(false);
-
+  const [message, setMessage] = useState(null);
   const dispatchToken = useContext(DispatchTokenContext);
 
   const handleChange = (event, newValue) => {
@@ -104,6 +104,8 @@ function Login() {
         }
       );
       console.log(response.data);
+      setMessage("Signed Up Successfully");
+      setValue(0);
     } catch (error) {
       console.log(error);
       setSignupErrorMessage("Signup error");
@@ -173,6 +175,9 @@ function Login() {
             >
               Login
             </Button>
+            <Typography variant="body2" gutterBottom color="primary">
+              {message}
+            </Typography>
           </form>
         </Paper>
       </TabPanel>
