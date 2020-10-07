@@ -7,7 +7,7 @@ import useStyles from "../styles/LoginStyles";
 import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
-import { makeStyles, useTheme } from "@material-ui/core/styles";
+import { useTheme } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
@@ -155,6 +155,7 @@ function Login() {
               label="Username"
               value={username}
               onChange={handleUsernameChange}
+              className={classes.input}
             />
             <TextField
               id="password"
@@ -162,6 +163,7 @@ function Login() {
               type="password"
               value={password}
               onChange={handlePasswordChange}
+              className={classes.input}
             />
 
             <Typography variant="body2" gutterBottom color="error">
@@ -175,9 +177,11 @@ function Login() {
             >
               Login
             </Button>
-            <Typography variant="body2" gutterBottom color="primary">
-              {message}
-            </Typography>
+            {message && (
+              <Typography variant="body2" gutterBottom color="primary">
+                {message}
+              </Typography>
+            )}
           </form>
         </Paper>
       </TabPanel>
@@ -221,6 +225,7 @@ function Login() {
               label="Username"
               value={username}
               onChange={handleUsernameChange}
+              className={classes.input}
             />
             <TextField
               id="password"
@@ -228,6 +233,7 @@ function Login() {
               type="password"
               value={password}
               onChange={handlePasswordChange}
+              className={classes.input}
             />
             <Typography variant="body2" gutterBottom color="error">
               {signupErrorMessage}

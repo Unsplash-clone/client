@@ -84,7 +84,7 @@ function Header() {
           />
         </div>
       </div>
-      <div>
+      <div className={classes.btnContainer}>
         <div className={classes.btnPhoto} onClick={handleUploadOpen}>
           Add a photo
         </div>
