@@ -59,6 +59,7 @@ function Landing() {
         }
       );
       dispatchImages({ type: "update", data: response.data.images });
+      resetPassword();
     } catch (error) {}
     setOpen(false);
   };
