@@ -177,9 +177,11 @@ function Login() {
             >
               Login
             </Button>
-            <Typography variant="body2" gutterBottom color="primary">
-              {message}
-            </Typography>
+            {message && (
+              <Typography variant="body2" gutterBottom color="primary">
+                {message}
+              </Typography>
+            )}
           </form>
         </Paper>
       </TabPanel>
