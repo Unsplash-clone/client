@@ -10,6 +10,7 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
+import Chip from "@material-ui/core/Chip";
 
 import makeStyles from "../styles/LandingStyles";
 
@@ -92,6 +93,7 @@ function Landing() {
         >
           <DeleteIcon className={classes.DeleteIcon} />
         </div>
+        {image.label && <Chip label={image.label} className="chip" />}
         <img className={classes.image} src={image.url} />
       </div>
     ));

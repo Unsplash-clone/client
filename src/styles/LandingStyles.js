@@ -11,6 +11,16 @@ export default makeStyles((theme) => ({
     "&:hover svg": {
       opacity: "1",
     },
+    "&:hover .chip": {
+      opacity: "1",
+    },
+    "& .chip": {
+      position: "absolute",
+      left: "8%",
+      bottom: "1rem",
+      opacity: "0",
+      transition: "opacity .2s ease-in-out",
+    },
   },
   deleteContainer: {
     position: "absolute",
